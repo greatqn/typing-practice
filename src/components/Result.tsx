@@ -1,6 +1,19 @@
 import { RepeatIcon } from "lucide-react";
 
-export default function Result({ accuracy, wpm }: { accuracy: number, wpm: number }) {
+interface ErrorStats {
+    count: number;
+    characters: { [key: string]: number };
+}
+
+export default function Result({ 
+    accuracy, 
+    wpm, 
+    errorStats 
+}: { 
+    accuracy: number, 
+    wpm: number,
+    errorStats: ErrorStats 
+}) {
     let status: string;
     let emoji: string;
 
@@ -31,6 +44,25 @@ export default function Result({ accuracy, wpm }: { accuracy: number, wpm: numbe
                         </div>
                         <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                             <p className="text-lg">WPM: <span className="font-bold text-success">{wpm}</span></p>
+                        </div>
+                        <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <p className="text-lg">错误次数: <span className="font-bold text-error">{errorStats.count}</span></p>
+                            {errorStats.count > 0 && (
+                                <div className="mt-2">
+                                    <h3 className="text-sm font-medium mb-2">常见错误:</h3>
+                                    <div className="grid grid-cols-3 gap-2">
+                                        {Object.entries(errorStats.characters)
+                                            .sort(([,a], [,b]) => b - a)
+                                            .slice(0, 6)
+                                            .map(([char, count]) => (
+                                                <div key={char} className="bg-gray-100 dark:bg-gray-600 p-2 rounded">
+                                                    <span className="font-mono">{char}</span>: {count}
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                     
