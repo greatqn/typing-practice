@@ -23,6 +23,7 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
     const [reload, setReload] = useState(false);
     const [textToPractice, setTextToPractice] = useState(text);
     const [lastPressedKey, setLastPressedKey] = useState('');
+    const [nextKey, setNextKey] = useState(text[0] || '');
     const [speedData, setSpeedData] = useState<SpeedDataPoint[]>([]);
     const [showError, setShowError] = useState(false);
 
@@ -60,6 +61,9 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
         const newInput = e.target.value;
         setUserInput(newInput);
         setLastPressedKey(newInput.slice(-1));
+        
+        // 设置下一个要打的字母
+        setNextKey(textToPractice[newInput.length] || '');
 
         // 检查最后输入的字符是否正确
         const isCorrect = newInput.slice(-1) === textToPractice[newInput.length - 1];
@@ -110,13 +114,13 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
         const enteredLetter = userInput[index];
 
         if (enteredLetter === undefined) {
-            // Letter not yet entered
-            return <span key={index}>{letter}</span>;
+            // 未输入的字母
+            return <span key={index} className="md:text-2xl">{letter}</span>;
         } else if (letter === enteredLetter) {
-            // Correctly entered letter
+            // 正确输入的字母
             return <span key={index} className="text-green-500 md:text-2xl">{letter}</span>;
         } else {
-            // Incorrectly entered letter
+            // 错误输入的字母
             return <span key={index} className="text-red-500 md:text-2xl">{letter}</span>;
         }
     };
@@ -147,7 +151,7 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
 
                     <SpeedChart speedData={speedData} />
                     
-                    <KeyboardLayout pressedKey={lastPressedKey} />
+                    <KeyboardLayout pressedKey={lastPressedKey} nextKey={nextKey} />
 
                     <textarea
                         disabled={!isStarted}
