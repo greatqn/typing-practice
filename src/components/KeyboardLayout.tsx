@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 const KeyboardLayout = ({ pressedKey }: { pressedKey: string }) => {
   const keyboardRows = [
