@@ -1,8 +1,17 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import Timer from './Timer';
 import Result from './Result';
-
+import KeyboardLayout from './KeyboardLayout';
+import SpeedChart from './SpeedChart';
 import calculateAccuracy from '../lib/compare';
+
+// 只保留错误音效
+const errorSound = new Audio('/sounds/error.mp3');
+
+interface SpeedDataPoint {
+  time: number;
+  wpm: number;
+}
 
 export default function TypingTest({ text, eclipsedTime }: { text: string, eclipsedTime: number }) {
     const [userInput, setUserInput] = useState('');
@@ -13,6 +22,9 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [reload, setReload] = useState(false);
     const [textToPractice, setTextToPractice] = useState(text);
+    const [lastPressedKey, setLastPressedKey] = useState('');
+    const [speedData, setSpeedData] = useState<SpeedDataPoint[]>([]);
+    const [showError, setShowError] = useState(false);
 
     useEffect(() => {
         if (reload) {
@@ -31,12 +43,33 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
     useEffect(() => {
         if (isStarted && !isSubmitted) {
             const interval = setInterval(() => {
-                setTimer((prevTimer) => prevTimer + 1);
+                setTimer((prevTimer) => {
+                    const newTimer = prevTimer + 1;
+                    // 更新速度数据
+                    const currentWPM = Math.round(userInput.split(' ').length / (newTimer / 60));
+                    setSpeedData(prev => [...prev, { time: newTimer, wpm: currentWPM }]);
+                    return newTimer;
+                });
             }, 1000);
 
             return () => clearInterval(interval);
         }
-    }, [isStarted, isSubmitted]);
+    }, [isStarted, isSubmitted, userInput]);
+
+    const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        const newInput = e.target.value;
+        setUserInput(newInput);
+        setLastPressedKey(newInput.slice(-1));
+
+        // 检查最后输入的字符是否正确
+        const isCorrect = newInput.slice(-1) === textToPractice[newInput.length - 1];
+        
+        if (!isCorrect) {
+            errorSound.play();
+            setShowError(true);
+            setTimeout(() => setShowError(false), 500);
+        }
+    };
 
     useEffect(() => {
         if (isStarted && !isSubmitted) {
@@ -72,11 +105,6 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
         }
     }, [eclipsedTime, handleSubmit, timer])
 
-
-    const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setUserInput(e.target.value);
-    };
-
     const renderLetter = (index: number) => {
         const letter = textToPractice[index];
         const enteredLetter = userInput[index];
@@ -100,10 +128,12 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
     return (
         <>
             <section className="p-2 flex flex-col gap-3">
-
-                <p className="p-2 border dark:border-gray-700 rounded md:text-2xl select-none">
+                <p className={`p-2 border dark:border-gray-700 rounded md:text-2xl select-none ${
+                    showError ? 'animate-shake' : ''
+                }`}>
                     {textToPractice.split('').map((_, index) => renderLetter(index))}
                 </p>
+                
                 <div className='flex items-center gap-2 w-full'>
                     <Timer time={timer} />
                     <div className='p-2 w-full rounded border-success border text-success'>
@@ -113,6 +143,11 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
                         <p>WPM : <span>{wpm}</span></p>
                     </div>
                 </div>
+
+                <SpeedChart speedData={speedData} />
+                
+                <KeyboardLayout pressedKey={lastPressedKey} />
+
                 <textarea
                     disabled={!isStarted}
                     onChange={handleInputChange}
