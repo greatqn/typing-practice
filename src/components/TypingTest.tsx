@@ -126,50 +126,52 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
     }
 
     return (
-        <>
-            <section className="p-2 flex flex-col gap-3">
-                <p className={`p-2 border dark:border-gray-700 rounded md:text-2xl select-none ${
-                    showError ? 'animate-shake' : ''
-                }`}>
-                    {textToPractice.split('').map((_, index) => renderLetter(index))}
-                </p>
-                
-                <div className='flex items-center gap-2 w-full'>
-                    <Timer time={timer} />
-                    <div className='p-2 w-full rounded border-success border text-success'>
-                        <p>Accuracy : <span>{accuracy}%</span></p>
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 px-4">
+            <div className="max-w-4xl mx-auto">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 space-y-6">
+                    <p className={`p-4 border dark:border-gray-700 rounded-lg text-lg md:text-xl leading-relaxed select-none ${
+                        showError ? 'animate-shake' : ''
+                    }`}>
+                        {textToPractice.split('').map((_, index) => renderLetter(index))}
+                    </p>
+                    
+                    <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
+                        <Timer time={timer} />
+                        <div className='p-3 rounded-lg border-success border text-success'>
+                            <p>准确率: <span>{accuracy}%</span></p>
+                        </div>
+                        <div className='p-3 rounded-lg border-success border text-success'>
+                            <p>WPM: <span>{wpm}</span></p>
+                        </div>
                     </div>
-                    <div className='p-2 w-full rounded border-success border text-success'>
-                        <p>WPM : <span>{wpm}</span></p>
+
+                    <SpeedChart speedData={speedData} />
+                    
+                    <KeyboardLayout pressedKey={lastPressedKey} />
+
+                    <textarea
+                        disabled={!isStarted}
+                        onChange={handleInputChange}
+                        className="w-full p-4 textarea rounded-lg textarea-bordered text-lg md:text-xl bg-gray-50 dark:bg-gray-700"
+                        placeholder="在此输入..."
+                    />
+
+                    <div className="flex gap-4">
+                        <button
+                            onClick={handleSubmit}
+                            className="flex-1 btn btn-success"
+                        >
+                            {isStarted ? '提交' : '开始'}
+                        </button>
+                        <button
+                            onClick={() => window.location.reload()}
+                            className="flex-1 btn btn-outline btn-success"
+                        >
+                            重置
+                        </button>
                     </div>
                 </div>
-
-                <SpeedChart speedData={speedData} />
-                
-                <KeyboardLayout pressedKey={lastPressedKey} />
-
-                <textarea
-                    disabled={!isStarted}
-                    onChange={handleInputChange}
-                    className="p-2 textarea rounded textarea-bordered text-lg md:text-2xl"
-                    title="Text area"
-                />
-
-                <button
-                    onClick={handleSubmit}
-                    className="btn btn-active btn-success"
-                >
-                    {isStarted ? 'Submit' : 'Start'}
-                </button>
-                <button
-                    onClick={() => {
-                        window.location.reload();
-                    }}
-                    className="btn btn-outline btn-success"
-                >
-                    {'Reset'}
-                </button>
-            </section>
-        </>
+            </div>
+        </div>
     );
 }

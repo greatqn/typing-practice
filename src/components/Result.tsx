@@ -5,32 +5,44 @@ export default function Result({ accuracy, wpm }: { accuracy: number, wpm: numbe
     let emoji: string;
 
     if (accuracy >= 90 && wpm >= 60) {
-        status = "Excellent!";
+        status = "太棒了!";
         emoji = "🎉";
     } else if (accuracy >= 80 && wpm >= 50) {
-        status = "Great Job!";
+        status = "做得好!";
         emoji = "👍";
     } else if (accuracy >= 70 && wpm >= 40) {
-        status = "Good Effort!";
+        status = "继续加油!";
         emoji = "😊";
     } else {
-        status = "Keep Practicing!";
+        status = "需要练习!";
         emoji = "💪";
     }
 
     return (
-        <div className="h-screen flex items-center justify-center p-4">
-            <section className="p-2 w-full md:w-1/2 h-1/2 rounded flex flex-col gap-3 bg-success justify-center items-center text-slate-50">
-                <div className="text-4xl">{emoji}</div>
-                <div className="text-xl">{status}</div>
-                <div className="">Accuracy : {accuracy}%</div>
-                <div>WPM (Word Per Minute) : {wpm}</div>
-                <div>
-                    <button onClick={() => window.location.reload()} className="bg-success p-2 flex items-center gap-1 rounded border">
-                       <RepeatIcon className="w-4 h-4" />
-                        Restart</button>
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
+            <div className="max-w-md w-full">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 text-center">
+                    <div className="text-6xl mb-4">{emoji}</div>
+                    <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">{status}</h2>
+                    
+                    <div className="space-y-4 mb-8">
+                        <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <p className="text-lg">准确率: <span className="font-bold text-success">{accuracy}%</span></p>
+                        </div>
+                        <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <p className="text-lg">WPM: <span className="font-bold text-success">{wpm}</span></p>
+                        </div>
+                    </div>
+                    
+                    <button 
+                        onClick={() => window.location.reload()} 
+                        className="btn btn-success w-full flex items-center justify-center gap-2"
+                    >
+                        <RepeatIcon className="w-5 h-5" />
+                        重新开始
+                    </button>
                 </div>
-            </section>
+            </div>
         </div>
-    )
+    );
 }
