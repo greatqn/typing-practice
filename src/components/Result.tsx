@@ -1,4 +1,5 @@
 import { RepeatIcon } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 interface ErrorStats {
     count: number;
@@ -66,13 +67,14 @@ export default function Result({
                         </div>
                     </div>
                     
-                    <button 
-                        onClick={() => window.location.reload()} 
-                        className="btn btn-success w-full flex items-center justify-center gap-2"
-                    >
-                        <RepeatIcon className="w-5 h-5" />
-                        重新开始
-                    </button>
+                    <Link to="/" className="block w-full">
+                        <button 
+                            className="btn btn-success w-full flex items-center justify-center gap-2"
+                        >
+                            <RepeatIcon className="w-5 h-5" />
+                            重新开始
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>
