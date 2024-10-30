@@ -48,8 +48,7 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
         if (e.key === 'Escape') {
             window.location.reload();
         }
-        if (e.key === ' ' && !isStarted) {
-            e.preventDefault();
+        if ((e.key === ' ' || e.key.length === 1) && !isStarted) {
             setIsStarted(true);
         }
     };
@@ -79,20 +78,29 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
         }
     }, [reload, textToPractice.length, userInput.length])
 
+    // 修改计时器逻辑
     useEffect(() => {
+        let intervalId: number;
+        
         if (isStarted && !isSubmitted) {
-            const interval = setInterval(() => {
-                setTimer((prevTimer) => {
+            intervalId = window.setInterval(() => {
+                setTimer(prevTimer => {
                     const newTimer = prevTimer + 1;
-                    const currentWPM = Math.round(userInput.split(' ').length / (newTimer / 60));
-                    setSpeedData(prev => [...prev, { time: newTimer, wpm: currentWPM }]);
+                    if (userInput.length > 0) {
+                        const currentWPM = Math.round(userInput.split(' ').length / (newTimer / 60));
+                        setSpeedData(prev => [...prev, { time: newTimer, wpm: currentWPM }]);
+                    }
                     return newTimer;
                 });
             }, 1000);
-
-            return () => clearInterval(interval);
         }
-    }, [isStarted, isSubmitted, userInput]);
+
+        return () => {
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
+        };
+    }, [isStarted, isSubmitted]);
 
     const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const newInput = e.target.value;
@@ -117,11 +125,15 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
             const wordPerMinute = Math.round(userInput.split(' ').length / (timer / 60));
             setWpm(Number.isFinite(wordPerMinute) ? wordPerMinute : 0);
 
-            const slicedText = userInput.length <= textToPractice.length ? textToPractice.slice(0, userInput.length) : textToPractice;
-            const accuracy = calculateAccuracy(slicedText, userInput);
-            setAccuracy(Number.isFinite(parseInt(accuracy)) ? parseInt(accuracy) : 0);
+            const totalChars = userInput.length;
+            const errorCount = errorStats.count;
+            const accuracyPercentage = totalChars > 0 
+                ? Math.max(0, 100 - (errorCount / totalChars * 100))
+                : 100;
+                
+            setAccuracy(Math.round(accuracyPercentage));
         }
-    }, [textToPractice, timer, userInput, isStarted, isSubmitted]);
+    }, [textToPractice, timer, userInput, isStarted, isSubmitted, errorStats.count]);
 
     const handleSubmit = useCallback(() => {
         if (!isStarted) {
@@ -133,11 +145,11 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
         setWpm(Number.isFinite(wordPerMinute) ? wordPerMinute : 0);
 
         const slicedText = userInput.length <= textToPractice.length ? textToPractice.slice(0, userInput.length) : textToPractice;
-        const accuracy = calculateAccuracy(slicedText, userInput);
+        const accuracy = calculateAccuracy(slicedText, userInput, errorStats.count);
         setAccuracy(Number.isFinite(parseInt(accuracy)) ? parseInt(accuracy) : 0);
 
         setIsSubmitted(true);
-    }, [isStarted, textToPractice, timer, userInput]);
+    }, [isStarted, textToPractice, timer, userInput, errorStats.count]);
 
     useEffect(() => {
         if (!(eclipsedTime === 0) && timer === eclipsedTime) {
@@ -210,17 +222,31 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
                         </div>
                     </div>
 
-                    <p 
-                        className={`p-4 border dark:border-gray-700 rounded-lg ${
-                            showError ? 'animate-shake' : ''
-                        }`}
-                        style={{ 
-                            fontSize: `${fontSize}px`,
-                            lineHeight: lineHeight
-                        }}
-                    >
-                        {textToPractice.split('').map((_, index) => renderLetter(index))}
-                    </p>
+                    <div className="grid grid-cols-1 gap-4">
+                        <div 
+                            className={`h-[200px] overflow-y-auto p-4 border dark:border-gray-700 rounded-lg ${
+                                showError ? 'animate-shake' : ''
+                            }`}
+                            style={{ 
+                                fontSize: `${fontSize}px`,
+                                lineHeight: lineHeight
+                            }}
+                        >
+                            {textToPractice.split('').map((_, index) => renderLetter(index))}
+                        </div>
+
+                        <textarea
+                            disabled={!isStarted}
+                            onChange={handleInputChange}
+                            onKeyDown={handleKeyDown}
+                            className="h-[200px] w-full p-4 textarea rounded-lg textarea-bordered bg-gray-50 dark:bg-gray-700 resize-none"
+                            placeholder="在此输入... (按任意键开始)"
+                            style={{ 
+                                fontSize: `${fontSize}px`,
+                                lineHeight: lineHeight
+                            }}
+                        />
+                    </div>
                     
                     <div className='grid grid-cols-1 sm:grid-cols-4 gap-4'>
                         <Timer time={timer} remainingTime={remainingTime} />
@@ -234,14 +260,6 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
                             <p>错误: <span>{errorStats.count}</span></p>
                         </div>
                     </div>
-
-                    <textarea
-                        disabled={!isStarted}
-                        onChange={handleInputChange}
-                        onKeyDown={handleKeyDown}
-                        className="w-full p-4 textarea rounded-lg textarea-bordered text-lg md:text-xl bg-gray-50 dark:bg-gray-700"
-                        placeholder="在此输入... (按空格开始)"
-                    />
 
                     <KeyboardLayout pressedKey={lastPressedKey} nextKey={nextKey} />
 

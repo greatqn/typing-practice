@@ -11,9 +11,9 @@ export default function App() {
     setSelectedTopic(value);
   };
 
-  const handleEclipsedChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const value = event.target.value;
-    setEclipsedTime(parseInt(value));
+  const handleTimeChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(event.target.value);
+    setEclipsedTime(value);
   };
 
   const { getAllTopics } = useSentenceStore();
@@ -29,40 +29,41 @@ export default function App() {
           </h1>
           
           <div className="space-y-6">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  选择主题
-                </label>
-                <select 
-                  value={selectedTopic} 
-                  onChange={handleSelectChange} 
-                  className="select select-success w-full bg-white dark:bg-gray-700"
-                >
-                  <option value="" disabled>选择你喜欢的主题</option>
-                  {topics.map(topic => (
-                    <option key={topic} value={topic}>
-                      {topic} ({sentences.filter(sen => sen.topic === topic).length})
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                选择主题
+              </label>
+              <select 
+                value={selectedTopic} 
+                onChange={handleSelectChange} 
+                className="select select-success w-full bg-white dark:bg-gray-700"
+              >
+                <option value="" disabled>选择你喜欢的主题</option>
+                {topics.map(topic => (
+                  <option key={topic} value={topic}>
+                    {topic} ({sentences.filter(sen => sen.topic === topic).length})
+                  </option>
+                ))}
+              </select>
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  选择时间
-                </label>
-                <select 
-                  value={eclipsedTime} 
-                  onChange={handleEclipsedChange} 
-                  className="select select-success w-full bg-white dark:bg-gray-700"
-                >
-                  <option value="" disabled>选择时间限制</option>
-                  <option value={30}>30秒</option>
-                  <option value={60}>60秒</option>
-                  <option value={120}>120秒</option>
-                  <option value={0}>无限制</option>
-                </select>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                选择时间: {eclipsedTime}秒
+              </label>
+              <div className="flex items-center gap-4">
+                <input
+                  type="range"
+                  min="10"
+                  max="180"
+                  step="5"
+                  value={eclipsedTime}
+                  onChange={handleTimeChange}
+                  className="range range-success range-sm flex-1"
+                />
+                <span className="text-sm text-gray-500 dark:text-gray-400 w-20 text-right">
+                  {Math.floor(eclipsedTime / 60)}:{(eclipsedTime % 60).toString().padStart(2, '0')}
+                </span>
               </div>
             </div>
 
