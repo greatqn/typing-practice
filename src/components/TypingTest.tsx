@@ -133,6 +133,8 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 px-4">
             <div className="max-w-4xl mx-auto">
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 space-y-6">
+                    
+                    
                     <p className={`p-4 border dark:border-gray-700 rounded-lg text-lg md:text-xl leading-relaxed select-none ${
                         showError ? 'animate-shake' : ''
                     }`}>
@@ -149,16 +151,18 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
                         </div>
                     </div>
 
-                    <SpeedChart speedData={speedData} />
-                    
-                    <KeyboardLayout pressedKey={lastPressedKey} nextKey={nextKey} />
-
                     <textarea
                         disabled={!isStarted}
                         onChange={handleInputChange}
                         className="w-full p-4 textarea rounded-lg textarea-bordered text-lg md:text-xl bg-gray-50 dark:bg-gray-700"
                         placeholder="在此输入..."
                     />
+
+
+                    
+                    <KeyboardLayout pressedKey={lastPressedKey} nextKey={nextKey} />
+
+                    <SpeedChart speedData={speedData} />
 
                     <div className="flex gap-4">
                         <button
