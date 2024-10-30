@@ -5,12 +5,12 @@ interface KeyboardLayoutProps {
   nextKey: string;
 }
 
-const KeyboardLayout: React.FC<KeyboardLayoutProps> = ({ pressedKey, nextKey }) => {
+const KeyboardLayout: React.FC<KeyboardLayoutProps> = ({ nextKey }) => {
   const keyboardRows = [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
     ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
     ['z', 'x', 'c', 'v', 'b', 'n', 'm'],
-    [' '] // 添加空格键行
+    [' ']
   ];
 
   return (
