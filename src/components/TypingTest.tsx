@@ -34,8 +34,8 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
     const [showError, setShowError] = useState(false);
     const [soundEnabled, setSoundEnabled] = useState(true);
     const [errorStats, setErrorStats] = useState<ErrorStats>({ count: 0, characters: {} });
-    const [fontSize, setFontSize] = useState('medium');
-    const [lineHeight, setLineHeight] = useState('normal');
+    const [fontSize, setFontSize] = useState(16);
+    const [lineHeight, setLineHeight] = useState(1.5);
 
     // 计算进度百分比
     const progress = Math.floor((userInput.length / textToPractice.length) * 100);
@@ -84,7 +84,6 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
             const interval = setInterval(() => {
                 setTimer((prevTimer) => {
                     const newTimer = prevTimer + 1;
-                    // 更新速度数据
                     const currentWPM = Math.round(userInput.split(' ').length / (newTimer / 60));
                     setSpeedData(prev => [...prev, { time: newTimer, wpm: currentWPM }]);
                     return newTimer;
@@ -99,11 +98,8 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
         const newInput = e.target.value;
         setUserInput(newInput);
         setLastPressedKey(newInput.slice(-1));
-        
-        // 设置下一个要打的字母
         setNextKey(textToPractice[newInput.length] || '');
 
-        // 检查最后输入的字符是否正确
         const isCorrect = newInput.slice(-1) === textToPractice[newInput.length - 1];
         
         if (!isCorrect) {
@@ -155,23 +151,16 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
         const enteredLetter = userInput[index];
 
         if (enteredLetter === undefined) {
-            // 未输入的字母
-            return <span key={index} className="md:text-2xl">{letter}</span>;
+            return <span key={index} className="text-gray-700 dark:text-gray-300">{letter}</span>;
         } else if (letter === enteredLetter) {
-            // 正确输入的字母
-            return <span key={index} className="text-green-500 md:text-2xl">{letter}</span>;
+            return <span key={index} className="text-green-500">{letter}</span>;
         } else {
-            // 错误输入的字母
-            return <span key={index} className="text-red-500 md:text-2xl">{letter}</span>;
+            return <span key={index} className="text-red-500">{letter}</span>;
         }
     };
 
     if (isSubmitted) {
-        return <Result 
-            wpm={wpm} 
-            accuracy={accuracy} 
-            errorStats={errorStats}
-        />;
+        return <Result wpm={wpm} accuracy={accuracy} errorStats={errorStats} />;
     }
 
     return (
@@ -179,9 +168,9 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
             <div className="max-w-4xl mx-auto">
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 space-y-6">
                     <div className="flex justify-between items-center">
-                        <div className="progress-bar w-1/2 bg-gray-200 rounded-full h-2.5">
+                        <div className="progress-bar w-3/4 mx-auto bg-gray-200 rounded-full h-2.5">
                             <div 
-                                className="bg-success h-2.5 rounded-full" 
+                                className="bg-success h-2.5 rounded-full transition-all duration-300" 
                                 style={{ width: `${progress}%` }}
                             ></div>
                         </div>
@@ -193,30 +182,43 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
                         </button>
                     </div>
 
-                    <div className="flex gap-4 mb-4">
-                        <select 
-                            value={fontSize} 
-                            onChange={(e) => setFontSize(e.target.value)}
-                            className="select select-bordered select-sm"
-                        >
-                            <option value="small">小字体</option>
-                            <option value="medium">中字体</option>
-                            <option value="large">大字体</option>
-                        </select>
-                        <select 
-                            value={lineHeight} 
-                            onChange={(e) => setLineHeight(e.target.value)}
-                            className="select select-bordered select-sm"
-                        >
-                            <option value="tight">紧凑</option>
-                            <option value="normal">正常</option>
-                            <option value="relaxed">宽松</option>
-                        </select>
+                    <div className="flex flex-col items-center gap-4 mb-4">
+                        <div className="w-full max-w-md flex flex-col gap-4">
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm">字体大小: {fontSize}px</span>
+                                <input
+                                    type="range"
+                                    min="12"
+                                    max="24"
+                                    value={fontSize}
+                                    onChange={(e) => setFontSize(Number(e.target.value))}
+                                    className="range range-success range-sm w-2/3"
+                                />
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm">行高: {lineHeight}</span>
+                                <input
+                                    type="range"
+                                    min="1"
+                                    max="2"
+                                    step="0.1"
+                                    value={lineHeight}
+                                    onChange={(e) => setLineHeight(Number(e.target.value))}
+                                    className="range range-success range-sm w-2/3"
+                                />
+                            </div>
+                        </div>
                     </div>
 
-                    <p className={`p-4 border dark:border-gray-700 rounded-lg text-lg md:text-xl leading-${lineHeight} text-${fontSize} ${
-                        showError ? 'animate-shake' : ''
-                    }`}>
+                    <p 
+                        className={`p-4 border dark:border-gray-700 rounded-lg ${
+                            showError ? 'animate-shake' : ''
+                        }`}
+                        style={{ 
+                            fontSize: `${fontSize}px`,
+                            lineHeight: lineHeight
+                        }}
+                    >
                         {textToPractice.split('').map((_, index) => renderLetter(index))}
                     </p>
                     
