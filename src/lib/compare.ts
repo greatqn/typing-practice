@@ -1,4 +1,4 @@
-export default function calculateAccuracy(text1: string, userInput: string, errorCount: number): string {
+export default function calculateAccuracy(text1: string, errorCount: number): string {
   const totalCharacters: number = text1.length;
   const accuracy: number = Math.max(0, 100 - (errorCount / totalCharacters * 100));
   return accuracy.toFixed(2);

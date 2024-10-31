@@ -145,7 +145,7 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
         setWpm(Number.isFinite(wordPerMinute) ? wordPerMinute : 0);
 
         const slicedText = userInput.length <= textToPractice.length ? textToPractice.slice(0, userInput.length) : textToPractice;
-        const accuracy = calculateAccuracy(slicedText, userInput, errorStats.count);
+        const accuracy = calculateAccuracy(slicedText, errorStats.count);
         setAccuracy(Number.isFinite(parseInt(accuracy)) ? parseInt(accuracy) : 0);
 
         setIsSubmitted(true);
