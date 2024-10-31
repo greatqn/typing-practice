@@ -32,6 +32,20 @@ export default function Result({
         emoji = "💪";
     }
 
+    // 格式化错误字符显示
+    const formatChar = (char: string) => {
+        switch (char) {
+            case ' ':
+                return '[空格]';
+            case '\n':
+                return '[换行]';
+            case '\t':
+                return '[制表符]';
+            default:
+                return char;
+        }
+    };
+
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
             <div className="max-w-md w-full">
@@ -57,7 +71,7 @@ export default function Result({
                                             .slice(0, 6)
                                             .map(([char, count]) => (
                                                 <div key={char} className="bg-gray-100 dark:bg-gray-600 p-2 rounded">
-                                                    <span className="font-mono">{char}</span>: {count}
+                                                    <span className="font-mono">{formatChar(char)}</span>: {count}
                                                 </div>
                                             ))
                                         }
