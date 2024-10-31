@@ -21,8 +21,7 @@ export default function App() {
 
   const { getAllTopics } = useSentenceStore();
   const topics = getAllTopics();
-  const { sentences } = useSentenceStore()
-
+ 
   // 检查是否有选中的自定义文本
   const hasSelectedCustomText = texts.some(t => t.selected);
   const isCustomTextDisabled = selectedTopic === 'custom' && (!texts.length || !hasSelectedCustomText);
