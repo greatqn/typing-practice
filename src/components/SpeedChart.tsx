@@ -37,7 +37,7 @@ const SpeedChart = ({ speedData }: { speedData: SpeedDataPoint[] }) => {
   };
 
   return (
-    <div className="speed-chart p-4 bg-white dark:bg-gray-800 rounded-lg">
+    <div className="speed-chart p-4 bg-white dark:bg-base-200 rounded-lg">
       <h3 className="text-sm mb-2 text-gray-700 dark:text-gray-300">
         打字速度 (WPM): <span className="font-bold">{currentWPM}</span>
       </h3>
