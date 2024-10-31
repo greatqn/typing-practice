@@ -89,7 +89,7 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
             intervalId = setInterval(() => {
                 setTimer(prevTimer => {
                     const newTimer = prevTimer + 1;
-                    // 计算当前的 WPM
+                    // 计算整体平均 WPM
                     const words = userInput.trim().split(/\s+/).length;
                     const minutes = newTimer / 60;
                     const currentWPM = Math.round(words / minutes) || 0;
@@ -109,7 +109,7 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
                 clearInterval(intervalId);
             }
         };
-    }, [isStarted, isSubmitted, userInput]);
+    }, [isStarted, isSubmitted]);
 
     const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const newInput = e.target.value;
