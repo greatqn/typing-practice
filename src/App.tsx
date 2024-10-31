@@ -1,10 +1,24 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import { useSentenceStore } from "./store/sentenceStore";
 import { Link } from "@tanstack/react-router";
+import { useCustomTextStore } from "./store/customTextStore";
+import CustomTextManager from "./components/CustomTextManager";
 
 export default function App() {
   const [selectedTopic, setSelectedTopic] = useState('physics')
   const [eclipsedTime, setEclipsedTime] = useState(60)
+  const [isStoreReady, setIsStoreReady] = useState(false)
+
+  useEffect(() => {
+    // 等待 store 从 localStorage 中恢复
+    const unsubscribe = useCustomTextStore.subscribe(() => {
+      setIsStoreReady(true);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
@@ -19,6 +33,10 @@ export default function App() {
   const { getAllTopics } = useSentenceStore();
   const topics = getAllTopics();
   const { sentences } = useSentenceStore()
+
+  // 检查是否有选中的自定义文本
+  const hasSelectedCustomText = useCustomTextStore.getState().texts.some(t => t.selected);
+  const isCustomTextDisabled = selectedTopic === 'custom' && isStoreReady && !hasSelectedCustomText;
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
@@ -39,6 +57,7 @@ export default function App() {
                 className="select select-success w-full bg-white dark:bg-gray-700"
               >
                 <option value="" disabled>选择你喜欢的主题</option>
+                <option value="custom">自定义文本</option>
                 {topics.map(topic => (
                   <option key={topic} value={topic}>
                     {topic} ({sentences.filter(sen => sen.topic === topic).length})
@@ -46,6 +65,10 @@ export default function App() {
                 ))}
               </select>
             </div>
+
+            {selectedTopic === 'custom' && (
+              <CustomTextManager />
+            )}
 
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -72,7 +95,10 @@ export default function App() {
               search={{ topic: selectedTopic, eclipsedTime: eclipsedTime }}
               className="block w-full"
             >
-              <button className="btn btn-success w-full">
+              <button 
+                className="btn btn-success w-full"
+                disabled={isCustomTextDisabled}
+              >
                 开始练习
               </button>
             </Link>
