@@ -1,62 +1,130 @@
-# Typing Practice App
+# 在线英文打字练习应用
 
-The Typing Practice App is a web application built with React.js that allows users to practice and improve their typing skills. This app provides a simple and intuitive interface for users to test their typing speed and accuracy.
+这是一个使用 Vite 构建的在线英文打字练习应用，旨在帮助用户提高英文打字速度和准确性。本应用提供了简洁直观的界面，让用户可以轻松进行打字练习和测试。
 
-## Getting Started
+本项目基于 [https://github.com/ashsajal1/typing-app](https://github.com/ashsajal1/typing-app) 进行二次开发，新增功能在 “特色功能” 和 “主要特点” 部分已做标注。
 
-### Prerequisites
+## 特色功能
 
-To run the Typing Practice App locally, you need to have PNPM installed. If PNPM is not already installed on your system, you can install it by following the instructions at [https://pnpm.io/installation](https://pnpm.io/installation).
+- 🎯 实时速度和准确率统计
+- 📊 动态速度曲线图表显示【新增】
+- ⌨️ 虚拟键盘布局显示【新增】
+- 🎵 打字音效反馈【新增】
+- 🌓 明暗主题切换
+- 📱 响应式设计，支持各种设备
+- 💾 自定义文本本地存储【新增】
+- 🔄 进度条实时显示【新增】
+- ⚡️ PWA 支持
 
-### Installation
+## 主要特点
 
-Follow these steps to get the app up and running on your local machine:
+1. **多样化练习内容**
+   - 内置多个主题的练习文本
+   - 支持自定义练习文本【新增】
+   - 智能文本分段显示【新增】
 
-1. Clone the repository:
-git clone https://github.com/ashsajal1/typing-app.git
+2. **专业的统计分析**
+   - WPM（每分钟字数）实时计算
+   - 准确率精确统计
+   - 错误字符分析【新增】
+   - 实时速度曲线展示【新增】
 
-2. Navigate to the project directory:
+3. **个性化设置**
+   - 字体大小调节【新增】
+   - 行高自定义【新增】
+   - 练习时长可调【新增】
+   - 声音开关控制【新增】
+
+## 开始使用
+
+### 环境要求
+
+运行此应用需要安装 PNPM。如果您尚未安装 PNPM，请访问 [https://pnpm.io/installation](https://pnpm.io/installation) 按照说明进行安装。
+
+### 安装步骤
+
+按照以下步骤在本地运行应用：
+
+1. 克隆仓库：
+
+```bash
+git clone https://github.com/wincatcher/typing-practice.toolsnav.top.git
+```
+
+2. 进入项目目录：
+
+```bash
 cd typing-app
+```
 
+3. 安装依赖：
 
-3. Install the dependencies using PNPM:
+```bash
 pnpm install
+```
 
+4. 启动开发服务器：
 
-4. Start the development server:
+```bash
 pnpm dev
+```
 
-5. Open your browser and visit `http://localhost:3000` to access the Typing Practice App.
+5. 在浏览器中访问 `http://localhost:3000` 即可使用应用。
 
-## Contributing
+## 技术栈
 
-Contributions are welcome! If you would like to contribute to this project, please follow these steps:
+- React.js
+- TypeScript
+- Tailwind CSS
+- DaisyUI
+- Zustand
+- TanStack Router
+- Vite
 
-1. Fork the repository by clicking the "Fork" button on the GitHub repository page.
+## 参与贡献
 
-2. Clone your forked repository to your local machine:
+我们欢迎各种形式的贡献！如果您想为项目做出贡献，请遵循以下步骤：
+
+1. 在 GitHub 上 Fork 本仓库
+
+2. 克隆您的 Fork 到本地：
+
+```bash
 git clone https://github.com/your-username/typing-app.git
+```
 
+3. 创建新的功能分支：
 
-3. Create a new branch for your feature or bug fix:
+```bash
 git checkout -b feature/your-feature-name
+```
 
-4. Make your changes and add them to your branch.
+4. 提交您的修改：
 
-5. Commit your changes:
-git commit -m "Add your commit message here"
+```bash
+git commit -m "添加新功能：xxx"
+```
 
+5. 推送到您的 Fork：
 
-6. Push your changes to your forked repository:
+```bash
 git push origin feature/your-feature-name
+```
 
+6. 创建 Pull Request
 
-7. Open a pull request on the main repository's GitHub page. Provide a clear description of your changes and their purpose.
+请确保您的代码符合项目的代码规范，并在提交 PR 前充分测试您的修改。
 
-Please ensure that your code follows the established code style and guidelines. Also, make sure to test your changes thoroughly before submitting a pull request.
+## 开源协议
 
-## License
+本项目采用 MIT 许可证。您可以自由使用、修改和分发代码，具体请参阅许可证条款。
 
-This project is licensed under the MIT License. You are free to use, modify, and distribute the code as per the terms of the license.
+## 反馈与支持
 
-Feel free to explore the code, make improvements, and contribute to the Typing Practice App. We appreciate your contributions!
+如果您发现任何问题或有改进建议，欢迎：
+
+- 提交 Issue
+- 发起 Pull Request
+- 联系开发团队
+
+感谢您对本项目的关注与支持！
