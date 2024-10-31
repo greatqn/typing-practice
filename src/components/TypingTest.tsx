@@ -109,24 +109,7 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
                 clearInterval(intervalId);
             }
         };
-    }, [isStarted, isSubmitted]);
-
-    // 单独处理 WPM 更新
-    useEffect(() => {
-        if (isStarted && !isSubmitted) {
-            const words = userInput.trim().split(/\s+/).length;
-            const minutes = timer / 60;
-            const currentWPM = Math.round(words / minutes) || 0;
-            
-            setSpeedData(prev => {
-                const lastPoint = prev[prev.length - 1];
-                if (lastPoint && lastPoint.time === timer) {
-                    return prev.slice(0, -1).concat({ time: timer, wpm: currentWPM });
-                }
-                return prev;
-            });
-        }
-    }, [userInput, timer, isStarted, isSubmitted]);
+    }, [isStarted, isSubmitted, userInput]);
 
     const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const newInput = e.target.value;
