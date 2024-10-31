@@ -36,6 +36,7 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
     const [errorStats, setErrorStats] = useState<ErrorStats>({ count: 0, characters: {} });
     const [fontSize, setFontSize] = useState(16);
     const [lineHeight, setLineHeight] = useState(1.5);
+    const [textAreaHeight, setTextAreaHeight] = useState('200px');
 
     // 计算进度百分比
     const progress = Math.floor((userInput.length / textToPractice.length) * 100);
@@ -171,6 +172,13 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
         }
     };
 
+    useEffect(() => {
+        const baseHeight = 200;
+        const heightMultiplier = fontSize / 16 * lineHeight;
+        const newHeight = `${baseHeight * heightMultiplier}px`;
+        setTextAreaHeight(newHeight);
+    }, [fontSize, lineHeight]);
+
     if (isSubmitted) {
         return <Result wpm={wpm} accuracy={accuracy} errorStats={errorStats} />;
     }
@@ -224,12 +232,14 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
 
                     <div className="grid grid-cols-1 gap-4">
                         <div 
-                            className={`h-[200px] overflow-y-auto p-4 border dark:border-gray-700 rounded-lg ${
+                            className={`overflow-y-auto p-4 border dark:border-gray-700 rounded-lg ${
                                 showError ? 'animate-shake' : ''
                             }`}
                             style={{ 
                                 fontSize: `${fontSize}px`,
-                                lineHeight: lineHeight
+                                lineHeight: lineHeight,
+                                height: textAreaHeight,
+                                width: '100%'
                             }}
                         >
                             {textToPractice.split('').map((_, index) => renderLetter(index))}
@@ -239,11 +249,12 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
                             disabled={!isStarted}
                             onChange={handleInputChange}
                             onKeyDown={handleKeyDown}
-                            className="h-[200px] w-full p-4 textarea rounded-lg textarea-bordered bg-gray-50 dark:bg-gray-700 resize-none"
+                            className="w-full p-4 textarea rounded-lg textarea-bordered bg-gray-50 dark:bg-gray-700 resize-none"
                             placeholder="在此输入... (按任意键开始)"
                             style={{ 
                                 fontSize: `${fontSize}px`,
-                                lineHeight: lineHeight
+                                lineHeight: lineHeight,
+                                height: textAreaHeight
                             }}
                         />
                     </div>
