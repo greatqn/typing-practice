@@ -36,11 +36,11 @@ export default function Result({
     const formatChar = (char: string) => {
         switch (char) {
             case ' ':
-                return '[空格]';
+                return '[空格键]';
             case '\n':
-                return '[换行]';
+                return '[回车键]';
             case '\t':
-                return '[制表符]';
+                return '[Tab键]';
             default:
                 return char;
         }
@@ -64,7 +64,7 @@ export default function Result({
                             <p className="text-lg">错误次数: <span className="font-bold text-error">{errorStats.count}</span></p>
                             {errorStats.count > 0 && (
                                 <div className="mt-2">
-                                    <h3 className="text-sm font-medium mb-2">常见错误:</h3>
+                                    <h3 className="text-sm font-medium mb-2">最容易输错的字符:</h3>
                                     <div className="grid grid-cols-3 gap-2">
                                         {Object.entries(errorStats.characters)
                                             .sort(([,a], [,b]) => b - a)

@@ -56,12 +56,13 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
     };
 
     // 更新错误统计
-    const updateErrorStats = (wrongChar: string) => {
+    const updateErrorStats = (index: number, wrongChar: string) => {
+        const correctChar = textToPractice[index];
         setErrorStats(prev => ({
             count: prev.count + 1,
             characters: {
                 ...prev.characters,
-                [wrongChar]: (prev.characters[wrongChar] || 0) + 1
+                [correctChar]: (prev.characters[correctChar] || 0) + 1
             }
         }));
     };
@@ -141,7 +142,7 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
             }
             setShowError(true);
             setTimeout(() => setShowError(false), 500);
-            updateErrorStats(newInput.slice(-1));
+            updateErrorStats(newInput.length - 1, newInput.slice(-1));
         }
     };
 
