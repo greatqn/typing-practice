@@ -49,7 +49,7 @@ export default function App() {
                 <option value="custom">自定义文本</option>
                 {topics.map(topic => (
                   <option key={topic} value={topic}>
-                    {topic} ({sentences.filter(sen => sen.topic === topic).length})
+                    {topic}
                   </option>
                 ))}
               </select>
