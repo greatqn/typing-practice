@@ -45,6 +45,13 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
     // 计算剩余时间
     const remainingTime = eclipsedTime - timer;
 
+    // 计算当前的 WPM
+    const calculateWPM = useCallback(() => {
+        const words = userInput.trim().split(/\s+/).length;
+        const minutes = timer / 60;
+        return Math.round(words / minutes) || 0;
+    }, [userInput, timer]);
+
     // 处理键盘快捷键
     const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Escape') {
@@ -87,20 +94,7 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
         
         if (isStarted && !isSubmitted) {
             intervalId = setInterval(() => {
-                setTimer(prevTimer => {
-                    const newTimer = prevTimer + 1;
-                    // 计算整体平均 WPM
-                    const words = userInput.trim().split(/\s+/).length;
-                    const minutes = newTimer / 60;
-                    const currentWPM = Math.round(words / minutes) || 0;
-                    
-                    // 更新速度数据
-                    setSpeedData(prev => [...prev, { 
-                        time: newTimer,
-                        wpm: currentWPM 
-                    }]);
-                    return newTimer;
-                });
+                setTimer(prevTimer => prevTimer + 1);
             }, 1000);
         }
 
@@ -110,6 +104,21 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
             }
         };
     }, [isStarted, isSubmitted]);
+
+    // 单独处理 WPM 更新
+    useEffect(() => {
+        if (isStarted && !isSubmitted && timer > 0) {
+            const words = userInput.trim().split(/\s+/).length;
+            const minutes = timer / 60;
+            const currentWPM = Math.round(words / minutes) || 0;
+            
+            setWpm(currentWPM);
+            setSpeedData(prev => [...prev, { 
+                time: timer,
+                wpm: currentWPM 
+            }]);
+        }
+    }, [timer, userInput, isStarted, isSubmitted]);
 
     const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const newInput = e.target.value;

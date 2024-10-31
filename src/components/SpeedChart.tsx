@@ -13,7 +13,8 @@ const SpeedChart = ({ speedData }: { speedData: SpeedDataPoint[] }) => {
   // 设置最小最大值范围
   const minWPM = 0;
   const maxWPM = Math.max(200, ...speedData.map(d => d.wpm));
-  const currentWPM = speedData.length > 0 ? speedData[speedData.length - 1].wpm : 0;
+  const currentWPM = speedData.length > 0 ? 
+      Math.min(speedData[speedData.length - 1].wpm, 999) : 0;  // 限制最大显示值
   
   // 计算比例尺
   const xScale = (width - 2 * padding) / Math.max(speedData.length - 1, 1);
@@ -21,6 +22,21 @@ const SpeedChart = ({ speedData }: { speedData: SpeedDataPoint[] }) => {
 
   // 生成Y轴刻度值数组
   const yTicks = [0, 50, 100, 150, 200];
+
+  // 生成平滑的路径
+  const generateSmoothPath = (data: SpeedDataPoint[]) => {
+    if (data.length < 2) return '';
+    
+    let path = `M ${padding} ${height - padding - ((Math.min(data[0].wpm, 999) - minWPM) * yScale)}`;
+    
+    for (let i = 1; i < data.length; i++) {
+      const x = padding + i * xScale;
+      const y = height - padding - ((Math.min(data[i].wpm, 999) - minWPM) * yScale);
+      path += ` L ${x} ${y}`;
+    }
+    
+    return path;
+  };
 
   return (
     <div className="speed-chart p-4 bg-white dark:bg-gray-800 rounded-lg">
@@ -47,40 +63,17 @@ const SpeedChart = ({ speedData }: { speedData: SpeedDataPoint[] }) => {
           className="text-gray-300 dark:text-gray-600"
         />
         
-        {/* 数据线和点 */}
-        {speedData.length > 0 && (
-          <g transform={`translate(${padding}, 0)`}>
-            {speedData.map((point, i) => {
-              const x = i * xScale;
-              const y = height - padding - ((point.wpm - minWPM) * yScale);
-              
-              return (
-                <React.Fragment key={i}>
-                  {i > 0 && (
-                    <line
-                      x1={(i-1) * xScale}
-                      y1={height - padding - ((speedData[i-1].wpm - minWPM) * yScale)}
-                      x2={x}
-                      y2={y}
-                      stroke="currentColor"
-                      className="text-success"
-                      strokeWidth={2}
-                    />
-                  )}
-                  <circle
-                    cx={x}
-                    cy={y}
-                    r="3"
-                    className="fill-success"
-                  />
-                </React.Fragment>
-              );
-            })}
-          </g>
-        )}
-
+        {/* 速度曲线 */}
+        <path
+          d={generateSmoothPath(speedData)}
+          fill="none"
+          stroke="currentColor"
+          className="text-success"
+          strokeWidth="2"
+        />
+        
         {/* Y轴刻度 */}
-        {yTicks.map((tick) => (
+        {yTicks.map(tick => (
           <g key={tick}>
             <line
               x1={padding - 3}
@@ -102,26 +95,6 @@ const SpeedChart = ({ speedData }: { speedData: SpeedDataPoint[] }) => {
             </text>
           </g>
         ))}
-
-        {/* X轴刻度 */}
-        <text
-          x={padding}
-          y={height - padding + 15}
-          textAnchor="middle"
-          className="text-xs text-gray-500 dark:text-gray-400"
-        >
-          0s
-        </text>
-        {speedData.length > 0 && (
-          <text
-            x={width - padding}
-            y={height - padding + 15}
-            textAnchor="middle"
-            className="text-xs text-gray-500 dark:text-gray-400"
-          >
-            {speedData[speedData.length - 1].time}s
-          </text>
-        )}
       </svg>
     </div>
   );
