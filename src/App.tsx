@@ -4,7 +4,7 @@ import { Link } from "@tanstack/react-router";
 
 export default function App() {
   const [selectedTopic, setSelectedTopic] = useState('physics')
-  const [eclipsedTime, setEclipsedTime] = useState(60)
+  const [eclipsedTime, setEclipsedTime] = useState(15)
 
   const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
@@ -54,7 +54,7 @@ export default function App() {
               <div className="flex items-center gap-4">
                 <input
                   type="range"
-                  min="10"
+                  min="15"
                   max="180"
                   step="5"
                   value={eclipsedTime}
