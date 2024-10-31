@@ -7,18 +7,7 @@ import CustomTextManager from "./components/CustomTextManager";
 export default function App() {
   const [selectedTopic, setSelectedTopic] = useState('physics')
   const [eclipsedTime, setEclipsedTime] = useState(60)
-  const [isStoreReady, setIsStoreReady] = useState(false)
-
-  useEffect(() => {
-    // 等待 store 从 localStorage 中恢复
-    const unsubscribe = useCustomTextStore.subscribe(() => {
-      setIsStoreReady(true);
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+  const { texts } = useCustomTextStore()
 
   const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
@@ -35,8 +24,8 @@ export default function App() {
   const { sentences } = useSentenceStore()
 
   // 检查是否有选中的自定义文本
-  const hasSelectedCustomText = useCustomTextStore.getState().texts.some(t => t.selected);
-  const isCustomTextDisabled = selectedTopic === 'custom' && isStoreReady && !hasSelectedCustomText;
+  const hasSelectedCustomText = texts.some(t => t.selected);
+  const isCustomTextDisabled = selectedTopic === 'custom' && (!texts.length || !hasSelectedCustomText);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
