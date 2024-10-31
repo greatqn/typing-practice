@@ -119,6 +119,20 @@ git push origin feature/your-feature-name
 
 本项目采用 MIT 许可证。您可以自由使用、修改和分发代码，具体请参阅许可证条款。
 
+## 开发者信息
+
+原开发者：[ashsajal1](https://github.com/ashsajal1)
+
+由 [wincatcher](https://github.com/wincatcher) 二次开发。
+
+如果你对这个项目感兴趣或有任何问题,欢迎通过以下方式联系我:
+
+- GitHub: [@wincatcher](https://github.com/wincatcher)
+- 电子邮件: wincatcher [at] gmail [dot] com
+- 个人简介: [https://biobio.top/](https://biobio.top/)
+
+我是一名热衷于创新和技术的独立开发者，专注于 Web 开发和人工智能应用。欢迎交流与合作!
+
 ## 反馈与支持
 
 如果您发现任何问题或有改进建议，欢迎：
