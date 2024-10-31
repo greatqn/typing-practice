@@ -28,8 +28,8 @@ export default function App() {
   const isCustomTextDisabled = selectedTopic === 'custom' && (!texts.length || !hasSelectedCustomText);
 
   return (
-    <div className="min-h-screen bg-base-100 dark:bg-base-300">
-      <div className="max-w-3xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex-1 bg-base-100 dark:bg-base-300">
+      <div className="container mx-auto max-w-3xl w-full py-8 px-4 sm:px-6 lg:px-8">
         <div className="bg-white dark:bg-base-200 rounded-lg shadow-lg p-8">
           <h1 className="text-2xl  text-center mb-8 text-gray-900 dark:text-white">
             提升你的打字技能

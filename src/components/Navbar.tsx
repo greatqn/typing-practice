@@ -4,7 +4,7 @@ import { GithubIcon } from "lucide-react";
 
 export default function Navbar() {
   return (
-    <nav className="flex items-center bg-base-100 dark:bg-base-300 dark:border-b dark:border-b-gray-700 justify-between p-4 shadow">
+    <nav className="sticky top-0 z-50 backdrop-blur-md bg-base-100/80 dark:bg-base-300/80 border-b border-b-gray-200 dark:border-b-gray-700 flex items-center justify-between p-4 shadow">
       <Link to='/' className="text-success">在线英文打字练习</Link>
       <div className="flex items-center gap-2">
         <ModeToggle />
