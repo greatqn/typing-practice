@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useEffect } from "react";
+import { ChangeEvent, useState } from "react";
 import { useSentenceStore } from "./store/sentenceStore";
 import { Link } from "@tanstack/react-router";
 import { useCustomTextStore } from "./store/customTextStore";

@@ -45,13 +45,6 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
     // 计算剩余时间
     const remainingTime = eclipsedTime - timer;
 
-    // 计算当前的 WPM
-    const calculateWPM = useCallback(() => {
-        const words = userInput.trim().split(/\s+/).length;
-        const minutes = timer / 60;
-        return Math.round(words / minutes) || 0;
-    }, [userInput, timer]);
-
     // 处理键盘快捷键
     const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Escape') {
@@ -63,7 +56,7 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
     };
 
     // 更新错误统计
-    const updateErrorStats = (index: number, wrongChar: string) => {
+    const updateErrorStats = (index: number) => {
         const correctChar = textToPractice[index];
         setErrorStats(prev => ({
             count: prev.count + 1,
@@ -134,7 +127,7 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
             }
             setShowError(true);
             setTimeout(() => setShowError(false), 500);
-            updateErrorStats(newInput.length - 1, newInput.slice(-1));
+            updateErrorStats(newInput.length - 1);
         }
     };
 
