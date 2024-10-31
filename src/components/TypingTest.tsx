@@ -5,6 +5,7 @@ import KeyboardLayout from './KeyboardLayout';
 import SpeedChart from './SpeedChart';
 import calculateAccuracy from '../lib/compare';
 import { VolumeX, Volume2 } from 'lucide-react';
+import React from 'react';
 
 // 只保留错误音效
 const errorSound = new Audio('/sounds/error.mp3');
@@ -162,14 +163,22 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
     const renderLetter = (index: number) => {
         const letter = textToPractice[index];
         const enteredLetter = userInput[index];
-
-        if (enteredLetter === undefined) {
-            return <span key={index} className="text-gray-700 dark:text-gray-300">{letter}</span>;
-        } else if (letter === enteredLetter) {
-            return <span key={index} className="text-green-500">{letter}</span>;
-        } else {
-            return <span key={index} className="text-red-500">{letter}</span>;
+        
+        let className = "text-gray-700 dark:text-gray-300";
+        if (enteredLetter !== undefined) {
+            className = letter === enteredLetter ? "text-green-500" : "text-red-500";
         }
+        
+        // 处理换行符
+        if (letter === '\n') {
+            return (
+                <React.Fragment key={index}>
+                    <br />
+                </React.Fragment>
+            );
+        }
+        
+        return <span key={index} className={className}>{letter}</span>;
     };
 
     useEffect(() => {
