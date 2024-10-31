@@ -7,7 +7,7 @@ import { ArrowLeft, HomeIcon } from 'lucide-react'
 
 const topicsSearchSchema = z.object({
   topic: z.string().catch('biology'),
-  eclipsedTime: z.number().catch(60),
+  eclipsedTime: z.number().catch(15),
 })
 export const Route = createFileRoute('/practice')({
   component: () => <Practice />,
