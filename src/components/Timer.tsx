@@ -1,11 +1,9 @@
-import { ClockIcon } from "lucide-react"
-
 interface TimerProps {
   time: number;
   remainingTime: number;
 }
 
-export default function Timer({ time, remainingTime }: TimerProps) {
+export default function Timer({  remainingTime }: TimerProps) {
   const minutes = Math.floor(remainingTime / 60);
   const seconds = remainingTime % 60;
   const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
