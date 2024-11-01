@@ -4,9 +4,10 @@ import Result from './Result';
 import KeyboardLayout from './KeyboardLayout';
 import SpeedChart from './SpeedChart';
 import calculateAccuracy from '../lib/compare';
-import { VolumeX, Volume2 } from 'lucide-react';
+import { VolumeX, Volume2, RepeatIcon } from 'lucide-react';
 import React from 'react';
 import TextControls from './TextControls';
+import { Dialog } from '@headlessui/react';
 
 // 只保留错误音效
 const errorSound = new Audio('/sounds/error.mp3');
@@ -19,6 +20,53 @@ interface SpeedDataPoint {
 interface ErrorStats {
   count: number;
   characters: { [key: string]: number };
+}
+
+// 新增 ResetConfirmDialog 组件
+function ResetConfirmDialog({ 
+    isOpen, 
+    onClose, 
+    onConfirm 
+}: { 
+    isOpen: boolean;
+    onClose: () => void;
+    onConfirm: () => void;
+}) {
+    return (
+        <Dialog
+            open={isOpen}
+            onClose={onClose}
+            className="relative z-50"
+        >
+            <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+            
+            <div className="fixed inset-0 flex items-center justify-center p-4">
+                <Dialog.Panel className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-sm w-full">
+                    <Dialog.Title className="text-lg font-medium mb-4">
+                        确认重新开始？
+                    </Dialog.Title>
+                    <Dialog.Description className="text-gray-500 dark:text-gray-400 mb-6">
+                        当前进度将会丢失，确定要重新开始吗？
+                    </Dialog.Description>
+                    
+                    <div className="flex justify-end gap-4">
+                        <button
+                            className="btn btn-ghost"
+                            onClick={onClose}
+                        >
+                            取消
+                        </button>
+                        <button
+                            className="btn btn-error"
+                            onClick={onConfirm}
+                        >
+                            重新开始
+                        </button>
+                    </div>
+                </Dialog.Panel>
+            </div>
+        </Dialog>
+    );
 }
 
 export default function TypingTest({ text, eclipsedTime }: { text: string, eclipsedTime: number }) {
@@ -39,6 +87,7 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
     const [fontSize, setFontSize] = useState(16);
     const [lineHeight, setLineHeight] = useState(1.5);
     const [textAreaHeight, setTextAreaHeight] = useState('200px');
+    const [showResetConfirm, setShowResetConfirm] = useState(false);
 
     // 计算进度百分比
     const progress = Math.floor((userInput.length / textToPractice.length) * 100);
@@ -49,11 +98,17 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
     // 处理键盘快捷键
     const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Escape') {
-            window.location.reload();
+            setShowResetConfirm(true);
         }
         if ((e.key === ' ' || e.key.length === 1) && !isStarted) {
             setIsStarted(true);
         }
+    };
+
+    // 重置确认
+    const handleReset = () => {
+        window.location.reload();
+        setShowResetConfirm(false);
     };
 
     // 更新错误统计
@@ -275,20 +330,38 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
 
                     <SpeedChart speedData={speedData} />
 
-                    <div className="flex gap-4">
-                        <button
-                            onClick={handleSubmit}
-                            className="flex-1 btn btn-success"
-                        >
-                            {isStarted ? '提交' : '开始'}
-                        </button>
-                        <button
-                            onClick={() => window.location.reload()}
-                            className="flex-1 btn btn-outline btn-success"
-                        >
-                            重置
-                        </button>
+                    <div className="relative">
+                        {!isStarted ? (
+                            <button
+                                onClick={handleSubmit}
+                                className="w-full btn btn-lg btn-success"
+                            >
+                                开始练习
+                            </button>
+                        ) : (
+                            <div className="flex items-center gap-2">
+                                <button
+                                    onClick={handleSubmit}
+                                    className="flex-1 btn btn-success"
+                                >
+                                    完成练习
+                                </button>
+                                <button
+                                    onClick={() => setShowResetConfirm(true)}
+                                    className="btn btn-ghost btn-circle"
+                                    title="重新开始 (ESC)"
+                                >
+                                    <RepeatIcon className="w-5 h-5" />
+                                </button>
+                            </div>
+                        )}
                     </div>
+
+                    <ResetConfirmDialog 
+                        isOpen={showResetConfirm}
+                        onClose={() => setShowResetConfirm(false)}
+                        onConfirm={handleReset}
+                    />
                 </div>
             </div>
         </div>

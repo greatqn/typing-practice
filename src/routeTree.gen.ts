@@ -20,31 +20,26 @@ import { Route as IndexImport } from './routes/index'
 // Create/Update Routes
 
 const TermsAndConditionsRoute = TermsAndConditionsImport.update({
-  id: '/terms-and-conditions',
   path: '/terms-and-conditions',
   getParentRoute: () => rootRoute,
 } as any)
 
 const PrivacyRoute = PrivacyImport.update({
-  id: '/privacy',
   path: '/privacy',
   getParentRoute: () => rootRoute,
 } as any)
 
 const PracticeRoute = PracticeImport.update({
-  id: '/practice',
   path: '/practice',
   getParentRoute: () => rootRoute,
 } as any)
 
 const AboutUsRoute = AboutUsImport.update({
-  id: '/about-us',
   path: '/about-us',
   getParentRoute: () => rootRoute,
 } as any)
 
 const IndexRoute = IndexImport.update({
-  id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
 } as any)
@@ -93,70 +88,13 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about-us': typeof AboutUsRoute
-  '/practice': typeof PracticeRoute
-  '/privacy': typeof PrivacyRoute
-  '/terms-and-conditions': typeof TermsAndConditionsRoute
-}
-
-export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about-us': typeof AboutUsRoute
-  '/practice': typeof PracticeRoute
-  '/privacy': typeof PrivacyRoute
-  '/terms-and-conditions': typeof TermsAndConditionsRoute
-}
-
-export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/about-us': typeof AboutUsRoute
-  '/practice': typeof PracticeRoute
-  '/privacy': typeof PrivacyRoute
-  '/terms-and-conditions': typeof TermsAndConditionsRoute
-}
-
-export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/about-us'
-    | '/practice'
-    | '/privacy'
-    | '/terms-and-conditions'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about-us' | '/practice' | '/privacy' | '/terms-and-conditions'
-  id:
-    | '__root__'
-    | '/'
-    | '/about-us'
-    | '/practice'
-    | '/privacy'
-    | '/terms-and-conditions'
-  fileRoutesById: FileRoutesById
-}
-
-export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutUsRoute: typeof AboutUsRoute
-  PracticeRoute: typeof PracticeRoute
-  PrivacyRoute: typeof PrivacyRoute
-  TermsAndConditionsRoute: typeof TermsAndConditionsRoute
-}
-
-const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutUsRoute: AboutUsRoute,
-  PracticeRoute: PracticeRoute,
-  PrivacyRoute: PrivacyRoute,
-  TermsAndConditionsRoute: TermsAndConditionsRoute,
-}
-
-export const routeTree = rootRoute
-  ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+export const routeTree = rootRoute.addChildren({
+  IndexRoute,
+  AboutUsRoute,
+  PracticeRoute,
+  PrivacyRoute,
+  TermsAndConditionsRoute,
+})
 
 /* prettier-ignore-end */
 
