@@ -3,7 +3,7 @@ interface TimerProps {
   remainingTime: number;
 }
 
-export default function Timer({ time, remainingTime }: TimerProps) {
+export default function Timer({ remainingTime }: TimerProps) {
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
