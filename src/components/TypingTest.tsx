@@ -284,11 +284,11 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
                     <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
                         <SpeedChart speedData={speedData} />
                         <Timer time={timer} remainingTime={remainingTime} />
-                        <div className="p-3 rounded-lg border-success border text-success">
+                        <div className="p-3 rounded-lg border-success border text-success flex flex-col items-center justify-center">
                             <div className="text-2xl font-bold">{accuracy}%</div>
                             <div className="text-sm opacity-80">准确率</div>
                         </div>
-                        <div className="p-3 rounded-lg border-success border text-success">
+                        <div className="p-3 rounded-lg border-success border text-success flex flex-col items-center justify-center">
                             <div className="text-2xl font-bold">{errorStats.count}</div>
                             <div className="text-sm opacity-80">错误</div>
                         </div>
