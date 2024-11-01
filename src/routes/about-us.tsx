@@ -15,43 +15,95 @@ function AboutUs() {
             关于我们
           </h1>
           
-          <div className="space-y-6 text-gray-700 dark:text-gray-300">
+          <div className="space-y-8 text-gray-700 dark:text-gray-300">
             <section className="space-y-4">
-              <h2 className="text-xl font-semibold">项目简介</h2>
-              <p>在线英文打字练习是一个开源的打字练习应用，旨在帮助用户提高英文打字速度和准确性。本项目采用现代化的网页技术开发，提供直观的用户界面和实时反馈功能。</p>
+              <h2 className="text-xl font-semibold flex items-center gap-2">
+                <span>🎯 项目简介</span>
+              </h2>
+              <p>这是一个使用 Vite 构建的在线英文打字练习应用，旨在帮助用户提高英文打字速度和准确性。本应用提供了简洁直观的界面，让用户可以轻松进行打字练习和测试。</p>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-semibold">核心功能</h2>
-              <ul className="list-disc list-inside space-y-2">
-                <li>实时速度和准确率统计</li>
-                <li>动态速度曲线图表显示</li>
-                <li>虚拟键盘布局显示</li>
-                <li>打字音效反馈</li>
-                <li>明暗主题切换</li>
-                <li>自定义文本本地存储</li>
-              </ul>
+              <h2 className="text-xl font-semibold flex items-center gap-2">
+                <span>✨ 特色功能</span>
+              </h2>
+              <div className="space-y-6">
+                <div>
+                  <h3 className="font-medium mb-2 flex items-center gap-2">
+                    <span>📊 实时反馈</span>
+                  </h3>
+                  <ul className="list-disc list-inside space-y-2">
+                    <li>实时速度和准确率统计</li>
+                    <li>动态速度曲线图表显示</li>
+                    <li>虚拟键盘布局显示</li>
+                    <li>打字音效反馈</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-medium mb-2 flex items-center gap-2">
+                    <span>⚡ 个性化体验</span>
+                  </h3>
+                  <ul className="list-disc list-inside space-y-2">
+                    <li>明暗主题切换</li>
+                    <li>自定义文本本地存储</li>
+                    <li>进度条实时显示</li>
+                    <li>PWA 支持</li>
+                  </ul>
+                </div>
+              </div>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-semibold">技术栈</h2>
-              <p>本项目使用以下技术栈开发：</p>
-              <ul className="list-disc list-inside space-y-2">
-                <li>React.js + TypeScript</li>
-                <li>Tailwind CSS + DaisyUI</li>
-                <li>Zustand 状态管理</li>
-                <li>TanStack Router 路由管理</li>
-                <li>Vite 构建工具</li>
-              </ul>
+              <h2 className="text-xl font-semibold flex items-center gap-2">
+                <span>🌟 主要特点</span>
+              </h2>
+              <div className="space-y-6">
+                <div>
+                  <h3 className="font-medium mb-2 flex items-center gap-2">
+                    <span>📚 多样化练习内容</span>
+                  </h3>
+                  <ul className="list-disc list-inside space-y-2">
+                    <li>内置多个主题的练习文本</li>
+                    <li>支持自定义练习文本</li>
+                    <li>智能文本分段显示</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-medium mb-2 flex items-center gap-2">
+                    <span>📈 专业的统计分析</span>
+                  </h3>
+                  <ul className="list-disc list-inside space-y-2">
+                    <li>WPM（每分钟字数）实时计算</li>
+                    <li>准确率精确统计</li>
+                    <li>错误字符分析</li>
+                    <li>实时速度曲线展示</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-medium mb-2 flex items-center gap-2">
+                    <span>⚙️ 个性化设置</span>
+                  </h3>
+                  <ul className="list-disc list-inside space-y-2">
+                    <li>字体大小调节</li>
+                    <li>行高自定义</li>
+                    <li>练习时长可调</li>
+                    <li>声音开关控制</li>
+                  </ul>
+                </div>
+              </div>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-semibold">开源协议</h2>
-              <p>本项目基于 MIT 协议开源，您可以自由使用、修改和分发代码，但需要保留原作者的版权声明。详细信息请参阅 GitHub 仓库中的 LICENSE 文件。</p>
+              <h2 className="text-xl font-semibold flex items-center gap-2">
+                <span>📜 开源协议</span>
+              </h2>
+              <p>本项目基于 MIT 协议开源，您可以自由使用、修改和分发代码，但需要保留原作者的版权声明。</p>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-semibold">联系我们</h2>
+              <h2 className="text-xl font-semibold flex items-center gap-2">
+                <span>📬 联系我们</span>
+              </h2>
               <p>如果您有任何问题、建议或合作意向，欢迎通过以下方式联系我们：</p>
               <ul className="list-disc list-inside space-y-2">
                 <li>GitHub：<a href="https://github.com/wincatcher" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">@wincatcher</a></li>
