@@ -11,11 +11,25 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as TermsAndConditionsImport } from './routes/terms-and-conditions'
+import { Route as PrivacyImport } from './routes/privacy'
 import { Route as PracticeImport } from './routes/practice'
-import { Route as AboutImport } from './routes/about'
+import { Route as AboutUsImport } from './routes/about-us'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const TermsAndConditionsRoute = TermsAndConditionsImport.update({
+  id: '/terms-and-conditions',
+  path: '/terms-and-conditions',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PrivacyRoute = PrivacyImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const PracticeRoute = PracticeImport.update({
   id: '/practice',
@@ -23,9 +37,9 @@ const PracticeRoute = PracticeImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AboutRoute = AboutImport.update({
-  id: '/about',
-  path: '/about',
+const AboutUsRoute = AboutUsImport.update({
+  id: '/about-us',
+  path: '/about-us',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,11 +60,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
+    '/about-us': {
+      id: '/about-us'
+      path: '/about-us'
+      fullPath: '/about-us'
+      preLoaderRoute: typeof AboutUsImport
       parentRoute: typeof rootRoute
     }
     '/practice': {
@@ -60,6 +74,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PracticeImport
       parentRoute: typeof rootRoute
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyImport
+      parentRoute: typeof rootRoute
+    }
+    '/terms-and-conditions': {
+      id: '/terms-and-conditions'
+      path: '/terms-and-conditions'
+      fullPath: '/terms-and-conditions'
+      preLoaderRoute: typeof TermsAndConditionsImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -67,42 +95,63 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/about-us': typeof AboutUsRoute
   '/practice': typeof PracticeRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/about-us': typeof AboutUsRoute
   '/practice': typeof PracticeRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/about-us': typeof AboutUsRoute
   '/practice': typeof PracticeRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/practice'
+  fullPaths:
+    | '/'
+    | '/about-us'
+    | '/practice'
+    | '/privacy'
+    | '/terms-and-conditions'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/practice'
-  id: '__root__' | '/' | '/about' | '/practice'
+  to: '/' | '/about-us' | '/practice' | '/privacy' | '/terms-and-conditions'
+  id:
+    | '__root__'
+    | '/'
+    | '/about-us'
+    | '/practice'
+    | '/privacy'
+    | '/terms-and-conditions'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
+  AboutUsRoute: typeof AboutUsRoute
   PracticeRoute: typeof PracticeRoute
+  PrivacyRoute: typeof PrivacyRoute
+  TermsAndConditionsRoute: typeof TermsAndConditionsRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
+  AboutUsRoute: AboutUsRoute,
   PracticeRoute: PracticeRoute,
+  PrivacyRoute: PrivacyRoute,
+  TermsAndConditionsRoute: TermsAndConditionsRoute,
 }
 
 export const routeTree = rootRoute
@@ -118,18 +167,26 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/about",
-        "/practice"
+        "/about-us",
+        "/practice",
+        "/privacy",
+        "/terms-and-conditions"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/about": {
-      "filePath": "about.tsx"
+    "/about-us": {
+      "filePath": "about-us.tsx"
     },
     "/practice": {
       "filePath": "practice.tsx"
+    },
+    "/privacy": {
+      "filePath": "privacy.tsx"
+    },
+    "/terms-and-conditions": {
+      "filePath": "terms-and-conditions.tsx"
     }
   }
 }
