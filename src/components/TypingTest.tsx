@@ -161,10 +161,13 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
             const minutes = timer / 60;
             const currentWPM = Math.round(words / minutes) || 0;
             
-            setWpm(currentWPM);
+            // 限制最大显示值为 200
+            const clampedWPM = Math.min(currentWPM, 200);
+            
+            setWpm(clampedWPM);
             setSpeedData(prev => [...prev, { 
                 time: timer,
-                wpm: currentWPM 
+                wpm: currentWPM  // 保存原始值用于统计
             }]);
         }
     }, [timer, userInput, isStarted, isSubmitted]);
@@ -319,7 +322,7 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
                             onChange={handleInputChange}
                             onKeyDown={handleKeyDown}
                             className="w-full p-4 textarea rounded-lg textarea-bordered bg-gray-50 dark:bg-gray-700 resize-none"
-                            placeholder="在此输入... (按任意键开始)"
+                            placeholder="在此输入..."
                             style={{ 
                                 fontSize: `${fontSize}px`,
                                 lineHeight: lineHeight,
@@ -344,12 +347,12 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
                                     onClick={handleSubmit}
                                     className="flex-1 btn btn-success"
                                 >
-                                    完成练习
+                                    结束练习
                                 </button>
                                 <button
                                     onClick={() => setShowResetConfirm(true)}
                                     className="btn btn-ghost btn-circle"
-                                    title="重新开始 (ESC)"
+                                    title="重新开始"
                                 >
                                     <RepeatIcon className="w-5 h-5" />
                                 </button>
