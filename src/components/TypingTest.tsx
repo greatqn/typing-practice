@@ -322,7 +322,7 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
                             onChange={handleInputChange}
                             onKeyDown={handleKeyDown}
                             className="w-full p-4 textarea rounded-lg textarea-bordered bg-gray-50 dark:bg-gray-700 resize-none"
-                            placeholder="在此输入..."
+                            placeholder="点击下方 【开始练习】 按钮后 在此输入..."
                             style={{ 
                                 fontSize: `${fontSize}px`,
                                 lineHeight: lineHeight,
