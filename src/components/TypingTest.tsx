@@ -6,6 +6,7 @@ import SpeedChart from './SpeedChart';
 import calculateAccuracy from '../lib/compare';
 import { VolumeX, Volume2 } from 'lucide-react';
 import React from 'react';
+import TextControls from './TextControls';
 
 // 只保留错误音效
 const errorSound = new Audio('/sounds/error.mp3');
@@ -220,47 +221,27 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
                         </button>
                     </div>
 
-                    <div className="flex flex-col items-center gap-4 mb-4">
-                        <div className="w-full max-w-md flex flex-col gap-4">
-                            <div className="flex items-center justify-between">
-                                <span className="text-sm">字体大小: {fontSize}px</span>
-                                <input
-                                    type="range"
-                                    min="12"
-                                    max="24"
-                                    value={fontSize}
-                                    onChange={(e) => setFontSize(Number(e.target.value))}
-                                    className="range range-success range-sm w-2/3"
-                                />
-                            </div>
-                            <div className="flex items-center justify-between">
-                                <span className="text-sm">行高: {lineHeight}</span>
-                                <input
-                                    type="range"
-                                    min="1"
-                                    max="2"
-                                    step="0.1"
-                                    value={lineHeight}
-                                    onChange={(e) => setLineHeight(Number(e.target.value))}
-                                    className="range range-success range-sm w-2/3"
-                                />
-                            </div>
-                        </div>
-                    </div>
-
                     <div className="grid grid-cols-1 gap-4">
-                        <div 
-                            className={`overflow-y-auto p-4 border dark:border-gray-700 rounded-lg ${
-                                showError ? 'animate-shake' : ''
-                            }`}
-                            style={{ 
-                                fontSize: `${fontSize}px`,
-                                lineHeight: lineHeight,
-                                height: textAreaHeight,
-                                width: '100%'
-                            }}
-                        >
-                            {textToPractice.split('').map((_, index) => renderLetter(index))}
+                        <div className="relative">
+                            <TextControls
+                                fontSize={fontSize}
+                                setFontSize={setFontSize}
+                                lineHeight={lineHeight}
+                                setLineHeight={setLineHeight}
+                            />
+                            <div 
+                                className={`overflow-y-auto p-4 border dark:border-gray-700 rounded-lg ${
+                                    showError ? 'animate-shake' : ''
+                                }`}
+                                style={{ 
+                                    fontSize: `${fontSize}px`,
+                                    lineHeight: lineHeight,
+                                    height: textAreaHeight,
+                                    width: '100%'
+                                }}
+                            >
+                                {textToPractice.split('').map((_, index) => renderLetter(index))}
+                            </div>
                         </div>
 
                         <textarea
