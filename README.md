@@ -1,8 +1,18 @@
 # 在线英文打字练习应用
 
-这是一个使用 Vite 构建的在线英文打字练习应用，旨在帮助用户提高英文打字速度和准确性。本应用提供了简洁直观的界面，让用户可以轻松进行打字练习和测试。
+在线英文打字练习应用是一个专业的打字训练平台，采用现代化的技术架构和用户友好的界面设计，致力于帮助用户提高英文打字速度和准确性。该应用不仅提供了丰富的练习内容，还配备了专业的数据分析和实时反馈系统。
 
-本项目基于 [https://github.com/ashsajal1/typing-app](https://github.com/ashsajal1/typing-app) 进行二次开发，新增功能在 “特色功能” 和 “主要特点” 部分已做标注。
+开源地址：[ https://github.com/wincatcher/typing-practice.toolsnav.top ]( https://github.com/wincatcher/typing-practice.toolsnav.top )
+
+网站Demo：[ https://typing-practice.toolsnav.top/ ]( https://typing-practice.toolsnav.top/ )
+
+![02-在线英文打字练习-练习-online-English-typing-practice-practice](https://github.com/user-attachments/assets/e358e8cc-fb5d-4489-9a88-1c27b8dd6d1e)
+
+![03-在线英文打字练习-结果-online-English-typing-practice-practice-result.png](https://s2.loli.net/2024/11/01/ATUv4XPNF3pVmJZ.png)
+
+注意：本项目基于 [https://github.com/ashsajal1/typing-app](https://github.com/ashsajal1/typing-app) 进行二次开发，新增功能在 “特色功能” 和 “主要特点” 部分已做标注。
+
+
 
 ## 特色功能
 
@@ -14,7 +24,7 @@
 - 📱 响应式设计，支持各种设备
 - 💾 自定义文本本地存储【新增】
 - 🔄 进度条实时显示【新增】
-- ⚡️ PWA 支持
+
 
 ## 主要特点
 
