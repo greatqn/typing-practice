@@ -262,11 +262,13 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
             <div className="max-w-4xl mx-auto">
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 space-y-6">
                     <div className="flex justify-between items-center">
-                        <div className="progress-bar w-3/4 mx-auto bg-gray-200 rounded-full h-2.5">
-                            <div 
-                                className="bg-success h-2.5 rounded-full transition-all duration-300" 
-                                style={{ width: `${progress}%` }}
-                            ></div>
+                        <div className="w-3/4">
+                            <div className="progress-bar bg-gray-200 rounded-full h-2.5">
+                                <div 
+                                    className="bg-success h-2.5 rounded-full transition-all duration-300" 
+                                    style={{ width: `${progress}%` }}
+                                ></div>
+                            </div>
                         </div>
                         <button
                             onClick={() => setSoundEnabled(!soundEnabled)}
@@ -274,6 +276,19 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
                         >
                             {soundEnabled ? <Volume2 /> : <VolumeX />}
                         </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                        <SpeedChart speedData={speedData} />
+                        <Timer time={timer} remainingTime={remainingTime} />
+                        <div className="p-3 rounded-lg border-success border text-success">
+                            <div className="text-2xl font-bold">{accuracy}%</div>
+                            <div className="text-sm opacity-80">准确率</div>
+                        </div>
+                        <div className="p-3 rounded-lg border-success border text-success">
+                            <div className="text-2xl font-bold">{errorStats.count}</div>
+                            <div className="text-sm opacity-80">错误</div>
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-1 gap-4">
@@ -312,23 +327,8 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
                             }}
                         />
                     </div>
-                    
-                    <div className='grid grid-cols-1 sm:grid-cols-4 gap-4'>
-                        <Timer time={timer} remainingTime={remainingTime} />
-                        <div className='p-3 rounded-lg border-success border text-success'>
-                            <p>准确率: <span>{accuracy}%</span></p>
-                        </div>
-                        <div className='p-3 rounded-lg border-success border text-success'>
-                            <p>WPM: <span>{wpm}</span></p>
-                        </div>
-                        <div className='p-3 rounded-lg border-success border text-success'>
-                            <p>错误: <span>{errorStats.count}</span></p>
-                        </div>
-                    </div>
 
                     <KeyboardLayout pressedKey={lastPressedKey} nextKey={nextKey} />
-
-                    <SpeedChart speedData={speedData} />
 
                     <div className="relative">
                         {!isStarted ? (

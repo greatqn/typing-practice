@@ -1,15 +1,19 @@
 import { ClockIcon } from "lucide-react"
 
-export default function Timer({ time, remainingTime }: { time: number, remainingTime: number }) {
-    return (
-        <div className="rounded w-full border border-success p-2 flex items-center gap-2 justify-between text-success">
-            <div className="flex items-center gap-2">
-                <ClockIcon className="h-4 w-4" />
-                <span>{time}</span>
-            </div>
-            {remainingTime > 0 && (
-                <span className="text-sm">剩余: {remainingTime}s</span>
-            )}
-        </div>
-    )
+interface TimerProps {
+  time: number;
+  remainingTime: number;
+}
+
+export default function Timer({ time, remainingTime }: TimerProps) {
+  const minutes = Math.floor(remainingTime / 60);
+  const seconds = remainingTime % 60;
+  const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+  return (
+    <div className="p-3 rounded-lg border-success border text-success">
+      <div className="text-2xl font-bold">{timeString}</div>
+      <div className="text-sm opacity-80">剩余时间</div>
+    </div>
+  );
 }
