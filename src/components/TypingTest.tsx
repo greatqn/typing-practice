@@ -296,12 +296,6 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
 
                     <div className="grid grid-cols-1 gap-4">
                         <div className="relative">
-                            <TextControls
-                                fontSize={fontSize}
-                                setFontSize={setFontSize}
-                                lineHeight={lineHeight}
-                                setLineHeight={setLineHeight}
-                            />
                             <div 
                                 className={`overflow-y-auto p-4 border dark:border-gray-700 rounded-lg ${
                                     showError ? 'animate-shake' : ''
@@ -314,6 +308,12 @@ export default function TypingTest({ text, eclipsedTime }: { text: string, eclip
                                 }}
                             >
                                 {textToPractice.split('').map((_, index) => renderLetter(index))}
+                                <TextControls
+                                    fontSize={fontSize}
+                                    setFontSize={setFontSize}
+                                    lineHeight={lineHeight}
+                                    setLineHeight={setLineHeight}
+                                />
                             </div>
                         </div>
 

@@ -17,9 +17,9 @@ export default function TextControls({
   const [showControls, setShowControls] = useState(false);
 
   return (
-    <div className="relative">
+    <>
       <button
-        className="btn btn-ghost btn-sm btn-circle absolute top-2 right-2"
+        className="btn btn-ghost btn-sm btn-circle absolute bottom-4 right-4 z-10"
         onClick={() => setShowControls(!showControls)}
         title="显示/隐藏文本设置"
       >
@@ -27,7 +27,7 @@ export default function TextControls({
       </button>
       
       {showControls && (
-        <div className="absolute top-12 right-2 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg w-64 z-10">
+        <div className="absolute bottom-16 right-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg w-64 z-10">
           <div className="space-y-4">
             <div>
               <div className="flex justify-between mb-2">
@@ -62,6 +62,6 @@ export default function TextControls({
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
