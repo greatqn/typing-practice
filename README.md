@@ -151,3 +151,7 @@ git push origin feature/your-feature-name
 - 联系开发团队
 
 感谢您对本项目的关注与支持！
+
+## Repo Activity
+
+![Alt](https://repobeats.axiom.co/api/embed/13af4c3a5901370468ec20c96e7ae0ad4e90e82f.svg "Repobeats analytics image")
