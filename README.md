@@ -138,7 +138,7 @@ git push origin feature/your-feature-name
 
 - GitHub: [@wincatcher](https://github.com/wincatcher)
 - 电子邮件: wincatcher [at] gmail [dot] com
-- 个人简介: [https://bento.me/wincatcher](https://bento.me/wincatcher)
+- 个人简介: [https://biobio.fun/](https://biobio.fun/)
 
 我是一名热衷于创新和技术的独立开发者，专注于 Web 开发和人工智能应用。欢迎交流与合作!
 
