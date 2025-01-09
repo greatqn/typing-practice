@@ -4,7 +4,7 @@
 
 开源地址：[ https://github.com/wincatcher/typing-practice.toolsnav.top ]( https://github.com/wincatcher/typing-practice.toolsnav.top )
 
-网站Demo：[ https://typing-practice.toolsnav.top/ ]( https://typing-practice.toolsnav.top/ )
+网站Demo：[ https://typing-practice.1007.fun/ ]( https://typing-practice.1007.fun/ )
 
 ![02-在线英文打字练习-练习-online-English-typing-practice-practice](https://github.com/user-attachments/assets/e358e8cc-fb5d-4489-9a88-1c27b8dd6d1e)
 
@@ -133,25 +133,3 @@ git push origin feature/your-feature-name
 原开发者：[ashsajal1](https://github.com/ashsajal1)
 
 由 [wincatcher](https://github.com/wincatcher) 二次开发。
-
-如果你对这个项目感兴趣或有任何问题,欢迎通过以下方式联系我:
-
-- GitHub: [@wincatcher](https://github.com/wincatcher)
-- 电子邮件: wincatcher [at] gmail [dot] com
-- 个人简介: [https://biobio.fun/](https://biobio.fun/)
-
-我是一名热衷于创新和技术的独立开发者，专注于 Web 开发和人工智能应用。欢迎交流与合作!
-
-## 反馈与支持
-
-如果您发现任何问题或有改进建议，欢迎：
-
-- 提交 Issue
-- 发起 Pull Request
-- 联系开发团队
-
-感谢您对本项目的关注与支持！
-
-## Repo Activity
-
-![Alt](https://repobeats.axiom.co/api/embed/13af4c3a5901370468ec20c96e7ae0ad4e90e82f.svg "Repobeats analytics image")
