@@ -13,7 +13,7 @@ export default function Navbar() {
       <div className="flex items-center gap-2">
         <ModeToggle />
         <a 
-          href="https://github.com/wincatcher/typing-practice.toolsnav.top" 
+          href="https://github.com/greatqn/typing-practice" 
           target="_blank" 
           rel="noopener noreferrer"
           className="btn btn-ghost"

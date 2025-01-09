@@ -21,12 +21,12 @@ export default function Footer() {
               Copyright © {new Date().getFullYear()} - All right reserved by
             </span>
             <a
-              href="https://bento.me/wincatcher"
+              href="https://typing-practice.1007.fun"
               className="link link-hover text-blue-500"
               target="_blank"
               rel="noopener noreferrer"
             >
-              风巢森淼
+              1007.fun
             </a>
           </p>
         </div>
