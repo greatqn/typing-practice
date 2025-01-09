@@ -100,17 +100,6 @@ function AboutUs() {
               <p>本项目基于 MIT 协议开源，您可以自由使用、修改和分发代码，但需要保留原作者的版权声明。</p>
             </section>
 
-            <section className="space-y-4">
-              <h2 className="text-xl font-semibold flex items-center gap-2">
-                <span>📬 联系我们</span>
-              </h2>
-              <p>如果您有任何问题、建议或合作意向，欢迎通过以下方式联系我们：</p>
-              <ul className="list-disc list-inside space-y-2">
-                <li>GitHub：<a href="https://github.com/wincatcher" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">@wincatcher</a></li>
-                <li>电子邮件：wincatcher [at] gmail [dot] com</li>
-                <li>个人主页：<a href="https://bento.me/wincatcher" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">https://bento.me/wincatcher</a></li>
-              </ul>
-            </section>
           </div>
 
           <div className="mt-8 text-center">
